@@ -1,5 +1,5 @@
 const Admin = require("../models/Admin");
-const AdminToken = require("../models/AdminToken");
+// const AdminToken = require("../models/AdminToken");
 
 module.exports.createLoginSession = function ({ username, password }) {
   return new Promise((resolve, reject) => {

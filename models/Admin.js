@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const AdminToken = require("./AdminToken");
+// const AdminToken = require("./AdminToken");
 const { createToken } = require("../methods/CookieSession");
 
 const adminSchema = mongoose.Schema(
@@ -43,19 +43,11 @@ adminSchema.statics.login = function (username, password) {
         if (!admin) reject("Username is incorrect");
         else {
           bcrypt.compare(password, admin.password, (err, isCorrect) => {
+            const token = createToken(admin);
             if (err) reject("Password compiling error");
             if (isCorrect) {
-              const adminToken = new AdminToken({ adminId: admin._id });
-              AdminToken.findOneAndDelete({ adminId: admin._id })
-                .then(() => {
-                  adminToken.save().then((dbToken) => {
-                    const { password, createdAt, updatedAt, ...data } =
-                      admin._doc;
-                    const token = createToken(dbToken._id);
-                    resolve({ admin: data, token });
-                  });
-                })
-                .catch(reject);
+              const { password, createdAt, updatedAt, ...data } = admin._doc;
+              resolve({ admin: admin._doc, token });
             } else reject("Password is incorrect");
           });
         }

@@ -6,7 +6,7 @@ const projectSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  discription: {
+  describtion: {
     type: String,
     required: true,
   },
@@ -17,7 +17,7 @@ const projectSchema = new mongoose.Schema({
   github: {
     type: String,
   },
-  deployed: {
+  url: {
     type: String,
   },
 });

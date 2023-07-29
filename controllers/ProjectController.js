@@ -37,15 +37,15 @@ module.exports.deleteProject = function (req, res) {
 };
 
 module.exports.createNewProject = function (req, res) {
-  const { body } = req;
-  const data = {
-    name: body.name,
-    discription: body.discription,
-    image: body.image,
-    github: body.github,
-    deployed: body.deployed,
-  };
-  const project = new Project(data);
+  // const { body } = req;
+  // const data = {
+  //   name: body.name,
+  //   discribtion: body.discribtion,
+  //   image: body.image,
+  //   github: body.github,
+  //   deployed: body.deployed,
+  // };
+  const project = new Project(req.body);
   project
     .save()
     .then((result) => {
