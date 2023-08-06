@@ -35,7 +35,8 @@ module.exports.adminLogout = function (req, res) {
 module.exports.checkIsAdmin = function (req, res) {
   const token = req.cookies.jwt;
   // Check if there is no jwt
-  if (!token) return res.status(406).json({ message: "Login to proceed" });
+  if (!token)
+    return res.status(406).json({ message: "Not logged in in this session" });
 
   jwt.verify(token, process.env.SECRET, (err, decodedToken) => {
     if (err) {

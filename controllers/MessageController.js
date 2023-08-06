@@ -58,9 +58,15 @@ module.exports.readMessage = function (req, res) {
       if (!result) {
         res.status(404).json({ message: "No Message Found", data: result });
       } else {
-        res
-          .status(200)
-          .json({ message: "Message have been set to seen", data: result });
+        Message.find({ seen: false })
+          .then((result) => {
+            result
+              ? res.status(200).json(result)
+              : res.status(204).json({ message: "No Unread Messages" });
+          })
+          .catch((err) => {
+            res.status(400).json(err);
+          });
       }
     })
     .catch((err) => {
