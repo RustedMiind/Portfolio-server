@@ -17,12 +17,16 @@ module.exports.createAdminAccount = function (req, res) {
 
 module.exports.adminLogin = function (req, res) {
   const { username, password } = req.body;
-  Admin.login(username, password).then((adminToken) => {
-    res
-      .status(202)
-      .cookie("jwt", adminToken.token, defaultOptions())
-      .json(adminToken.admin);
-  });
+  Admin.login(username, password)
+    .then((adminToken) => {
+      res
+        .status(202)
+        .cookie("jwt", adminToken.token, defaultOptions())
+        .json(adminToken.admin);
+    })
+    .catch((err) => {
+      res.status(404).cookie("jwt", "", defaultOptions()).json(err);
+    });
 };
 
 module.exports.adminLogout = function (req, res) {
