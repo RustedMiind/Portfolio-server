@@ -21,21 +21,18 @@ module.exports.adminLogin = function (req, res) {
     .then((adminToken) => {
       res
         .status(202)
-        // .cookie("jwt", adminToken.token, defaultOptions())
-        .json({ ...adminToken.admin, token: adminToken.token });
+        .cookie("jwt", adminToken.token, defaultOptions())
+        .json({ ...adminToken.admin, token: admin });
     })
     .catch((err) => {
-      res
-        .status(404)
-        // .cookie("jwt", "", defaultOptions())
-        .json(err);
+      res.status(404).cookie("jwt", "", defaultOptions()).json(err);
     });
 };
 
 module.exports.adminLogout = function (req, res) {
   res
     .status(200)
-    // .cookie("jwt", "Empty Token", defaultOptions({ maxAge: 100 }))
+    .cookie("jwt", "Empty Token", defaultOptions({ maxAge: 100 }))
     .json({ message: "Logged out succesfully" });
 };
 
