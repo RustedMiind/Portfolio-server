@@ -3,7 +3,8 @@ const Admin = require("../models/Admin");
 const jwt = require("jsonwebtoken");
 
 module.exports.checkAdmin = function (req, res, next) {
-  const token = req.cookies.jwt;
+  // const token = req.cookies.jwt;
+  const token = req.headers.token;
   // Check if there is no jwt
   if (!token) return res.status(406).json({ message: "Login to proceed" });
 

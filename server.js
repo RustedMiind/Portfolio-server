@@ -23,13 +23,13 @@ app.use(
       "https://ali-soliman.firebaseapp.com",
     ],
     credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token"],
+    allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token", "token"],
   })
 );
-app.use(function (req, res, next) {
-  res.header("Set-Cookie: cross-site-cookie=whatever; SameSite=None; Secure");
-  next();
-});
+// app.use(function (req, res, next) {
+//   res.header("Set-Cookie: cross-site-cookie=whatever; SameSite=None; Secure");
+//   next();
+// });
 app.use(express.json());
 app.use(cookieParser());
 

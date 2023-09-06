@@ -2,6 +2,7 @@ const Message = require("../models/Message");
 
 module.exports.getUnreadMessages = function (req, res) {
   Message.find({ seen: false })
+    .sort({ createdAt: -1 })
     .then((result) => {
       result
         ? res.status(200).json(result)
@@ -14,6 +15,7 @@ module.exports.getUnreadMessages = function (req, res) {
 
 module.exports.getAllMessages = function (req, res) {
   Message.find({})
+    .sort({ createdAt: -1 })
     .then((result) => {
       result
         ? res.status(200).json(result)

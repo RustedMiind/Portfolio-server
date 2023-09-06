@@ -2,6 +2,7 @@ const Project = require("../models/Project");
 
 module.exports.getAllProjects = function (req, res) {
   Project.find({})
+    .sort({ createdAt: -1 })
     .then((result) => {
       if (result.length) {
         res.status(200).json(result);

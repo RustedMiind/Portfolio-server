@@ -1,7 +1,7 @@
 const Admin = require("../models/Admin");
-const { createLoginSession } = require("../methods/LoginAdmin");
+// const { createLoginSession } = require("../methods/LoginAdmin");
 const jwt = require("jsonwebtoken");
-const { defaultOptions } = require("../methods/CookieSession");
+// const { defaultOptions } = require("../methods/CookieSession");
 
 module.exports.createAdminAccount = function (req, res) {
   const admin = new Admin(req.body);
@@ -21,23 +21,28 @@ module.exports.adminLogin = function (req, res) {
     .then((adminToken) => {
       res
         .status(202)
-        .cookie("jwt", adminToken.token, defaultOptions())
-        .json({ ...adminToken.admin, token: admin });
+        // .cookie("jwt", adminToken.token, defaultOptions())
+        .json({ ...adminToken.admin, token: adminToken.token });
     })
     .catch((err) => {
-      res.status(404).cookie("jwt", "", defaultOptions()).json(err);
+      res
+        .status(404)
+        // .cookie("jwt", "", defaultOptions())
+        .json(err);
     });
 };
 
 module.exports.adminLogout = function (req, res) {
   res
     .status(200)
-    .cookie("jwt", "Empty Token", defaultOptions({ maxAge: 100 }))
+    // .cookie("jwt", "Empty Token", defaultOptions({ maxAge: 100 }))
     .json({ message: "Logged out succesfully" });
 };
 
 module.exports.checkIsAdmin = function (req, res) {
-  const token = req.cookies.jwt;
+  // const token = req.cookies.jwt;
+  const token = req.headers.token;
+
   // Check if there is no jwt
   if (!token)
     return res.status(406).json({ message: "Not logged in in this session" });
